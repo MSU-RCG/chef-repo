@@ -110,7 +110,7 @@ template "#{node[:osticket][:dir]}/include/ost-config.php" do
   owner "root"
   group "root"
   mode "0644"
-  variables (
+  variables(
     :database       => node[:osticket][:db][:database],
     :user           => node[:osticket][:db][:user],
     :password       => node[:osticket][:db][:password],
@@ -119,6 +119,7 @@ template "#{node[:osticket][:dir]}/include/ost-config.php" do
     :nonce_key      => node[:osticket][:keys][:nonce],
     :admin_email    => node[:osticket][:users][:admin][:email]
   )
+  notifies :write, resources(:log => "Navigate to http://#{server_fqdn}/setup/install.php to complete the installation.")
 end
 
 include_recipe %w{php::php5 php::module_mysql}
