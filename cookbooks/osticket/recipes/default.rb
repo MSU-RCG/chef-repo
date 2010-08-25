@@ -115,7 +115,7 @@ template "#{node[:osticket][:dir]}/include/ost-config.php" do
     :user           => node[:osticket][:db][:user],
     :password       => node[:osticket][:db][:password],
     :dbhost         => node[:osticket][:db][:host],
-    :tableprevix    => node[:osticket][:db][:prefix],
+    :tableprefix    => node[:osticket][:db][:prefix],
     :nonce_key      => node[:osticket][:keys][:nonce],
     :admin_email    => node[:osticket][:users][:admin][:email]
   )
