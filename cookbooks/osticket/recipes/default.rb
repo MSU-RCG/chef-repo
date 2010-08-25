@@ -39,6 +39,11 @@ execute "untar-osticket" do
   creates "#{node[:osticket][:dir]}/ost-config.sample.php"
 end
 
+#execute "create-ost-config-php" do
+#  cwd "#{node[:osticket][:dir]}/include"
+#  command "cp ost-config.sample.php ost-config.php && chmod 666 ost-config.php"
+#end
+
 execute "mysql-install-osticket-privileges" do
   command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} < /etc/mysql/ost-grants.sql"
   action :nothing
@@ -99,6 +104,22 @@ end
 #  )
 #  notifies :write, resources(:log => "Navigate to 'http://#{server_fqdn}/wp-admin/install.php' to complete wordpress installation")
 #end
+
+template "#{node[:osticket][:dir]}/include/ost-config.php" do
+  source "ost-config.php.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+  variables (
+    :database       => node[:osticket][:db][:database],
+    :user           => node[:osticket][:db][:user],
+    :password       => node[:osticket][:db][:password],
+    :dbhost         => node[:osticket][:db][:host],
+    :tableprevix    => node[:osticket][:db][:prefix],
+    :nonce_key      => node[:osticket][:keys][:nonce],
+    :admin_email    => node[:osticket][:users][:admin][:email]
+  )
+end
 
 include_recipe %w{php::php5 php::module_mysql}
 

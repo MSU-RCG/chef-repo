@@ -43,6 +43,11 @@ attribute "osticket/db/password",
   :display_name => "OSTicket MySQL password",
   :description => "Password for the OSTicket MySQL user.",
   :default => "randomly generated"
+  
+attribute "osticket/db/prefix",
+  :display_name => "OSticket MySQL table prefix",
+  :description => "Table prefix for allowing more than one osticket install in the same database",
+  :default => "ost_"
 
 attribute "osticket/keys/auth",
   :display_name => "OSTicket auth key",
@@ -64,3 +69,7 @@ attribute "osticket/keys/nonce",
   :description => "OSTicket nonce key.",
   :default => "randomly generated"
   
+attribute "osticket/users/admin/email",
+  :display_name => "Administrative e-mail",
+  :description => "Used only for db connection issues and related alerts.",
+  :default => "user@example.com"

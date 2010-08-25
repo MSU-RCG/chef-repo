@@ -24,6 +24,8 @@ default[:osticket][:checksum] = "f1311b312a982fa8a888ac971dcdb92339c4fd450e6da81
 default[:osticket][:dir] = "/var/www/osticket"
 default[:osticket][:db][:database] = "osticketdb"
 default[:osticket][:db][:user] = "osticketuser"
+default[:osticket][:db][:prefix] = "ost_"
+
 
 ::Chef::Node.send(:include, Opscode::OpenSSL::Password)
 
@@ -32,3 +34,5 @@ default[:osticket][:keys][:auth] = secure_password
 default[:osticket][:keys][:secure_auth] = secure_password
 default[:osticket][:keys][:logged_in] = secure_password
 default[:osticket][:keys][:nonce] = secure_password
+
+default[:osticket][:users][:admin][:email] = "user@example.com"
