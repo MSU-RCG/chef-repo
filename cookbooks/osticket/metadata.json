@@ -1,5 +1,5 @@
 {
-    "version": "0.0.1",
+    "version": "1.0.1",
     "recommendations": {
     },
     "recipes": {
@@ -19,6 +19,20 @@
         ],
         "description": "OSTicket nonce key.",
         "display_name": "OSTicket nonce key"
+      },
+      "osticket/users/admin/email": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "user@example.com",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "description": "Used only for db connection issues and related alerts.",
+        "display_name": "Administrative e-mail"
       },
       "osticket/keys/secure_auth": {
         "required": "optional",
@@ -89,6 +103,20 @@
         ],
         "description": "OSTicket auth key.",
         "display_name": "OSTicket auth key"
+      },
+      "osticket/db/prefix": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "ost_",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "description": "Table prefix for allowing more than one osticket install in the same database",
+        "display_name": "OSticket MySQL table prefix"
       },
       "osticket/db/password": {
         "required": "optional",
