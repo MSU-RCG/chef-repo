@@ -25,7 +25,7 @@ default[:osticket][:dir] = "/var/www/osticket"
 default[:osticket][:db][:database] = "osticketdb"
 default[:osticket][:db][:user] = "osticketuser"
 default[:osticket][:db][:prefix] = "ost_"
-
+default[:osticket][:db][:dbhost] = "localhost"
 
 ::Chef::Node.send(:include, Opscode::OpenSSL::Password)
 

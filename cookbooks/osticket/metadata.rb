@@ -3,7 +3,7 @@ maintainer_email "matthaeus.harris@gmail.com"
 license          "Apache 2.0"
 description      "Installs/Configures OSTicket"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "1.0.6"
+version          "1.0.7"
 depends          "php"
 depends          "apache2"
 depends          "openssl"

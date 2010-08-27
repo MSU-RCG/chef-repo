@@ -133,6 +133,13 @@ execute "populate #{node[:osticket][:db][:database]} database" do
   command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} #{node[:osticket][:db][:database]} < #{Chef::Config[:file_cache_path]}/osticket.sql"
 end
 
+cron "osticket cron jobs" do
+  minute "*/5"
+  command "/usr/bin/php #{node[:osticket][:dir]}/api/cron.php"
+  user "nobody"
+  mailto "#{node[:osticket][:users][:admin][:email]}" 
+end
+
 include_recipe %w{php::php5 php::module_mysql}
 
 web_app "osticket" do
