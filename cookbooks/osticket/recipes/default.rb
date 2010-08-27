@@ -130,7 +130,7 @@ template "#{Chef::Config[:file_cache_path]}/osticket.sql" do
 end
 
 execute "populate #{node[:osticket][:db][:database]} database" do
-  command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} < #{Chef::Config[:file_cache_path]}/osticket.sql"
+  command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} #{node[:osticket][:db][:database]} < #{Chef::Config[:file_cache_path]}/osticket.sql"
 end
 
 include_recipe %w{php::php5 php::module_mysql}
