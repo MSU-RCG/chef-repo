@@ -122,6 +122,17 @@ template "#{node[:osticket][:dir]}/include/ost-config.php" do
 #  notifies :write, resources(:log => "Navigate to 'http://#{server_fqdn}/setup/install.php' to complete the installation.")
 end
 
+template "#{Chef::Config[:file_cache_path]}/osticket.sql" do 
+  source "osticket.sql.erb"
+  owner "root"
+  group "root"
+  mode "0400"
+end
+
+execute "populate #{node[:osticket][:db][:database]} database" do
+  command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} < #{Chef::Config[:file_cache_path]}/osticket.sql"
+end
+
 include_recipe %w{php::php5 php::module_mysql}
 
 web_app "osticket" do
