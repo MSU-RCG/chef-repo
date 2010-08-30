@@ -1,11 +1,25 @@
 {
-    "version": "1.0.7",
+    "version": "1.0.9",
     "recommendations": {
     },
     "recipes": {
       "osticket": "Installs and configures OSTicket with a LAMP stack on a single server."
     },
     "attributes": {
+      "osticket/users/admin/firstname": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "Admin",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "description": "First name for the admin user",
+        "display_name": "Administrative user first name"
+      },
       "osticket/keys/nonce": {
         "required": "optional",
         "calculated": false,
@@ -47,6 +61,20 @@
         ],
         "description": "OSTicket secure auth key.",
         "display_name": "OSTicket secure auth key"
+      },
+      "osticket/users/admin/password": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "admin1",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "description": "Password for the administrative user.  Should be changed after install.",
+        "display_name": "Administrative Password"
       },
       "osticket/db/database": {
         "required": "optional",
@@ -104,6 +132,20 @@
         "description": "OSTicket auth key.",
         "display_name": "OSTicket auth key"
       },
+      "osticket/db/host": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "localhost",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "description": "Rarely specified",
+        "display_name": "OSTicket MySQL database host"
+      },
       "osticket/db/prefix": {
         "required": "optional",
         "calculated": false,
@@ -160,6 +202,20 @@
         "description": "Version of OSTicket to download from the OSTicket site.",
         "display_name": "OSTicket download version"
       },
+      "osticket/users/admin/username": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "admin",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "description": "Username for the admin user",
+        "display_name": "Administrative Username"
+      },
       "osticket/keys/logged_in": {
         "required": "optional",
         "calculated": false,
@@ -173,6 +229,20 @@
         ],
         "description": "OSTicket logged-in key.",
         "display_name": "OSTicket logged-in key"
+      },
+      "osticket/users/admin/lastname": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "Admin",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "description": "Last name for the admin user",
+        "display_name": "Administrative user last name"
       }
     },
     "suggestions": {

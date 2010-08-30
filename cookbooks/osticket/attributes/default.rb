@@ -25,7 +25,7 @@ default[:osticket][:dir] = "/var/www/osticket"
 default[:osticket][:db][:database] = "osticketdb"
 default[:osticket][:db][:user] = "osticketuser"
 default[:osticket][:db][:prefix] = "ost_"
-default[:osticket][:db][:dbhost] = "localhost"
+default[:osticket][:db][:host] = "localhost"
 
 ::Chef::Node.send(:include, Opscode::OpenSSL::Password)
 
@@ -36,3 +36,7 @@ default[:osticket][:keys][:logged_in] = secure_password
 default[:osticket][:keys][:nonce] = secure_password
 
 default[:osticket][:users][:admin][:email] = "user@example.com"
+default[:osticket][:users][:admin][:username] = "admin"
+default[:osticket][:users][:admin][:firstname] = "Admin"
+default[:osticket][:users][:admin][:lastname] = "Admin"
+default[:osticket][:users][:admin][:password] = "admin1"

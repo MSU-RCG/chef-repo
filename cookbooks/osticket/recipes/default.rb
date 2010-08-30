@@ -45,7 +45,7 @@ end
 #end
 
 execute "mysql-install-osticket-privileges" do
-  command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} < /etc/mysql/ost-grants.sql"
+  command "/usr/bin/mysql -h #{node[:osticket][:db][:host]} -u root -p#{node[:mysql][:server_root_password]} < /etc/mysql/ost-grants.sql"
   action :nothing
 end
 
@@ -69,7 +69,7 @@ template "/etc/mysql/ost-grants.sql" do
 end
 
 execute "create #{node[:osticket][:db][:database]} database" do
-  command "/usr/bin/mysqladmin -u root -p#{node[:mysql][:server_root_password]} create #{node[:osticket][:db][:database]}"
+  command "/usr/bin/mysqladmin -h #{node[:osticket][:db][:host]} -u root -p#{node[:mysql][:server_root_password]} create #{node[:osticket][:db][:database]}"
   not_if do
     m = Mysql.new("localhost", "root", node[:mysql][:server_root_password])
     m.list_dbs.include?(node[:osticket][:db][:database])
@@ -122,15 +122,24 @@ template "#{node[:osticket][:dir]}/include/ost-config.php" do
 #  notifies :write, resources(:log => "Navigate to 'http://#{server_fqdn}/setup/install.php' to complete the installation.")
 end
 
+require 'digest/md5'
+
 template "#{Chef::Config[:file_cache_path]}/osticket.sql" do 
   source "osticket.sql.erb"
   owner "root"
   group "root"
-  mode "0444"
+  mode "0400"
+  variables(
+    :admin_username   => node[:osticket][:users][:admin][:username],
+    :admin_password   => Digest::MD5.hexdigest(node[:osticket][:users][:admin][:password]),
+    :admin_firstname  => node[:osticket][:users][:admin][:firstname],
+    :admin_lastname   => node[:osticket][:users][:admin][:lastname],
+    :admin_email      => node[:osticket][:users][:admin][:email]
+  )
 end
 
 execute "populate #{node[:osticket][:db][:database]} database" do
-  command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} #{node[:osticket][:db][:database]} < #{Chef::Config[:file_cache_path]}/osticket.sql"
+  command "/usr/bin/mysql -h #{node[:osticket][:db][:host]} -u #{node[:osticket][:db][:user]} -p#{node[:osticket][:db][:password]} #{node[:osticket][:db][:database]} < #{Chef::Config[:file_cache_path]}/osticket.sql"
 end
 
 cron "osticket cron jobs" do

@@ -3,7 +3,7 @@ maintainer_email "matthaeus.harris@gmail.com"
 license          "Apache 2.0"
 description      "Installs/Configures OSTicket"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "1.0.7"
+version          "1.0.9"
 depends          "php"
 depends          "apache2"
 depends          "openssl"
@@ -48,6 +48,11 @@ attribute "osticket/db/prefix",
   :display_name => "OSticket MySQL table prefix",
   :description => "Table prefix for allowing more than one osticket install in the same database",
   :default => "ost_"
+  
+attribute "osticket/db/host",
+  :display_name => "OSTicket MySQL database host",
+  :description => "Rarely specified",
+  :default => "localhost"
 
 attribute "osticket/keys/auth",
   :display_name => "OSTicket auth key",
@@ -73,3 +78,23 @@ attribute "osticket/users/admin/email",
   :display_name => "Administrative e-mail",
   :description => "Used only for db connection issues and related alerts.",
   :default => "user@example.com"
+  
+attribute "osticket/users/admin/username",
+  :display_name => "Administrative Username",
+  :description => "Username for the admin user",
+  :default => "admin"
+  
+attribute "osticket/users/admin/password",
+  :display_name => "Administrative Password",
+  :description => "Password for the administrative user.  Should be changed after install.",
+  :default => "admin1"
+  
+attribute "osticket/users/admin/firstname",
+  :display_name => "Administrative user first name",
+  :description => "First name for the admin user",
+  :default => "Admin"
+  
+attribute "osticket/users/admin/lastname",
+  :display_name => "Administrative user last name",
+  :description => "Last name for the admin user",
+  :default => "Admin"

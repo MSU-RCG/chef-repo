@@ -427,7 +427,7 @@ CREATE TABLE IF NOT EXISTS `ost_staff` (
 --
 
 INSERT INTO `ost_staff` (`staff_id`, `group_id`, `dept_id`, `username`, `firstname`, `lastname`, `passwd`, `email`, `phone`, `phone_ext`, `mobile`, `signature`, `isactive`, `isadmin`, `isvisible`, `onvacation`, `daylight_saving`, `append_signature`, `change_passwd`, `timezone_offset`, `max_page_size`, `auto_refresh_rate`, `created`, `lastlogin`, `updated`) VALUES
-(1, 1, 1, 'academic', 'Admin', 'Admin', '9ceb954878a4ccb6096e3b5886fc48b5', 'matthaeus.harris@gmail.com', '', NULL, '', '', 1, 1, 1, 0, 0, 0, 0, -6.0, 0, 0, '2010-08-24 14:25:10', NULL, '0000-00-00 00:00:00');
+(1, 1, 1, '<%= @admin_username %>', '<%= @admin_firstname %>', '<%= @admin_lastname %>', '<%= @admin_password %>', '<%= @admin_email %>', '', NULL, '', '', 1, 1, 1, 0, 0, 0, 0, -6.0, 0, 0, '2010-08-24 14:25:10', NULL, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
