@@ -128,7 +128,7 @@ template "#{Chef::Config[:file_cache_path]}/osticket.sql" do
   source "osticket.sql.erb"
   owner "root"
   group "root"
-  mode "0400"
+  mode "0444"
   variables(
     :admin_username   => node[:osticket][:users][:admin][:username],
     :admin_password   => Digest::MD5.hexdigest(node[:osticket][:users][:admin][:password]),
