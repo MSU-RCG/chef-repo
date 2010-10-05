@@ -17,35 +17,7 @@ admins = data_bag_item("groups","admin")
 adminlist = []
 #pp admins
 admins['users'].each do |username|
-  useritem = data_bag_item("users",username)
-#  pp useritem
-  adminlist.push(useritem['id'])
-  user(useritem['id']) do
-    uid           useritem['uid']
-    gid           useritem['gid']
-    shell         useritem['shell']
-    comment       useritem['comment']
-    home          useritem['home']
-    password      useritem['password']
-    supports      :manage_home => true
-  end
-  
-  if useritem['ssh']
-    directory "#{useritem['home']}/.ssh" do
-      action      :create
-      owner       useritem['id']
-      group       useritem['gid']
-      mode        0755
-    end
-    
-    template "#{useritem['home']}/.ssh/authorized_keys2" do 
-      source "authorized_keys2.erb"
-      variables(:ssh_key => useritem['ssh']['dsa_id'])
-      owner useritem['id']
-      group useritem['gid']
-      mode 0644
-    end
-  end
+  rcg_user username
 end
 
 group "admin" do
@@ -74,36 +46,7 @@ end
 #pp @local_users
 
 @local_users.each do |local_user|
-  rcg_user local_user do
-  end
-  
-  u = data_bag_item("users",local_user)
-  user u['id'] do
-    uid           u['uid']
-    gid           u['gid']
-    shell         u['shell']
-    comment       u['comment']
-    home          u['home']
-    password      u['password']
-    supports      :manage_home => true
-  end
-
-  if u['ssh']
-    directory "#{u['home']}/.ssh" do
-      action      :create
-      owner       useritem['id']
-      group       useritem['gid']
-      mode        0755
-    end
-
-    template "#{u['home']}/.ssh/authorized_keys2" do 
-      source "authorized_keys2.erb"
-      variables(:ssh_key => u['ssh']['dsa_id'])
-      owner useritem['id']
-      group useritem['gid']
-      mode 0644
-    end
-  end
+  rcg_user local_user
 end
 
 @local_groups = []
