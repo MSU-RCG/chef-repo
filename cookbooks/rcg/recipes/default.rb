@@ -74,6 +74,10 @@ end
 #pp @local_users
 
 @local_users.each do |local_user|
+  rcg_user u['id'] do
+    name          u['id']
+  end
+  
   u = data_bag_item("users",local_user)
   user u['id'] do
     uid           u['uid']
@@ -122,3 +126,4 @@ end
     members   g['users']
   end
 end
+
