@@ -1,3 +1,5 @@
+require "pp"
+
 define :rcg_user do
-  puts "username: #{params[:id]}"
+  pp params
 end
