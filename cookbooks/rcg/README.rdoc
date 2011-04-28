@@ -1,0 +1,16 @@
+= DESCRIPTION:
+This is a preliminary version of the RCG users script.  Global admins are loaded from data bags.  Local and role-defined users are listed in the local and role-defined attributes and loaded from data bags.
+
+The data bags are as follows:
+
+groups:  contains the group information
+users:  contains the user information, including ssh-key information.
+
+= REQUIREMENTS:
+
+= ATTRIBUTES:
+Roles can provide the users and groups attributes, which should be flat lists of users and groups found in the users and groups data bags.
+Nodes can provide the localusers and localgroups attributes, which should be flat lists of users and groups found in the users and groups data bags.
+
+= USAGE:
+

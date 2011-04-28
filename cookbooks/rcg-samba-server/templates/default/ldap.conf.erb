@@ -1,0 +1,27 @@
+# The distinguished name of the search base.
+base ou=People,dc=montana,dc=edu
+
+# The uri to the ldap server
+uri ldaps://ds.montana.edu/
+
+# The distinguished name to bind to the server with.
+# Optional: default is to bind anonymously.
+binddn <ldap account dn>
+
+# The credentials to bind with. 
+# Optional: default is no credential.
+bindpw <ldap account passwd>
+
+# HEADS UP: the pam_crypt, pam_nds_passwd,
+# and pam_ad_passwd options are no
+# longer supported.
+#
+# Do not hash the password at all; presume
+# the directory server will do it, if
+# necessary. This is the default.
+pam_password md5
+
+# OpenLDAP SSL mechanism
+# start_tls mechanism uses the normal LDAP port, LDAPS typically 636
+#ssl start_tls
+ssl on

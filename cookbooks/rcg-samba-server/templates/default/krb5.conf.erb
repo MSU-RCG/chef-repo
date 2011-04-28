@@ -1,0 +1,21 @@
+default = FILE:/var/log/krb5libs.log
+kdc = FILE:/var/log/krb5kdc.log
+admin_server = FILE:/var/log/kadmind.log
+
+[libdefaults]
+ default_realm = MSU.MONTANA.EDU:w
+ dns_lookup_realm = false
+ dns_lookup_kdc = false
+ ticket_lifetime = 24h
+ forwardable = yes
+
+[realms]
+    MSU.MONTANA.EDU = {
+        kdc = obsidian.msu.montana.edu
+        admin_server = obsidian.msu.montana.edu
+        default_domain = MSU.MONTANA.EDU
+    }
+
+[domain_realm]
+    .msu.montana.edu = MSU.MONTANA.EDU
+    msu.montana.edu = MSU.MONTANA.EDU
