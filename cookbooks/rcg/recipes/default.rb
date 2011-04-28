@@ -18,6 +18,10 @@ adminlist = []
 #pp admins
 admins['users'].each do |username|
   rcg_user username
+  useritem = data_bag_item("users",username)
+  systemusername = useritem["username"]
+  systemusername = username unless systemusername
+  adminlist.push(systemusername)
 end
 
 group "admin" do
@@ -29,6 +33,9 @@ template "/etc/sudoers" do
   mode 0440
   owner "root"
   group "root"
+  variables(
+    :sudoers_append => node[:sudoers_append]
+  )
 end
 
 @local_users = []
@@ -43,7 +50,8 @@ rescue => err
   puts err
 end
 
-#pp @local_users
+puts "pp'ing local users:"
+pp @local_users
 
 @local_users.each do |local_user|
   rcg_user local_user
@@ -69,3 +77,7 @@ end
   end
 end
 
+@role_users = []
+begin
+  pp node[:role_users]
+end
