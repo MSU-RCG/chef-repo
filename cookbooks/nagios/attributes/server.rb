@@ -30,7 +30,7 @@ set[:nagios][:config_subdir] = "conf.d"
 # The default client role to use to find clients
 default[:nagios][:client_role] = "nagios_client"
 
-default[:nagios][:notifications_enabled]   = 0
+default[:nagios][:notifications_enabled]   = 1
 default[:nagios][:check_external_commands] = true
 default[:nagios][:default_contact_groups]  = %w(admins)
 default[:nagios][:sysadmin_email]          = "root@localhost"
