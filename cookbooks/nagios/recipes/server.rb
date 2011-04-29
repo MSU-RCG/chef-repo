@@ -25,9 +25,27 @@ include_recipe "apache2::mod_ssl"
 include_recipe "apache2::mod_rewrite"
 include_recipe "nagios::client"
 
-sysadmins = search(:users, 'nagios:[* TO *]')
+# Production Search
+users = search(:users, 'nagios:[* TO *]')
+# Debug Search
+#users = search(:users, 'id:tyghe')
 all_nodes = search(:node, "*:*")
 nodes = Array.new
+
+# Will hold the members that will become contacts
+members = Array.new
+sysadmins = Array.new
+
+# Get rid of entries with blank pager & email
+# I can't seem to get the search above to just include non empty values so
+# a loop it is
+users.each do |s|
+  if not s['nagios']['email'].empty? and not s['nagios']['pager'].empty?
+    Chef::Log.debug( "Adding user #{s['id']} Email: #{s['nagios']['email']} Pager: #{s['nagios']['pager']}" )
+    sysadmins << s
+    members << s['id']
+  end
+end
 
 if all_nodes.empty?
   Chef::Log.info("No nodes returned from search, using this node so hosts.cfg has data")
@@ -42,15 +60,10 @@ else
       end
     end
     if can_add and not a['hostname'].nil?
-      Chef::Log.info( "Adding #{a['hostname']} to nodes to be monitored" )
+      Chef::Log.debug( "Adding #{a['hostname']} to nodes to be monitored" )
       nodes << a
     end
   end
-end
-
-members = Array.new
-sysadmins.each do |s|
-  members << s['id']
 end
 
 role_list = Array.new
