@@ -8,7 +8,7 @@ default_attributes({ :rvm => {
                        :global_gems => [
                                         {:name => "bundler"},
                                         {:name => "rake"},
-                                        {:name => "chef"}
+                                        {:name => "chef", :version => "0.9.14"}
                                        ]
                      }
                    })
