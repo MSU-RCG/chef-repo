@@ -9,10 +9,22 @@ rundir  /var/run/munin
 # Where to look for the HTML templates
 tmpldir /etc/munin/templates
 
-# a simple host tree
+# Standard Hosts
 <% @munin_nodes.each do |system| -%>
 [<%= system[:hostname] %>]
     address <%= system[:ipaddress] %>
     use_node_name yes
+
+<% end -%>
+
+# SNMP Hosts(Each host has the address of the Munin node that is the gateway)
+<% @munin_snmp_nodes.each do |host,info| -%>
+[<%= host %>]
+    <% if not info[:gateway].empty? %>
+    address <%= info[:gateway] %>
+    <% else %>
+    address <%= node[:ipaddress] %>
+    <% end %>
+    use_node_name no
 
 <% end -%>

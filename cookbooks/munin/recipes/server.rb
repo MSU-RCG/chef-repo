@@ -25,6 +25,10 @@ include_recipe "munin::client"
 package "munin"
 
 web_users = search( :users, "munin_admin:true" )
+#munin_servers = search(:node, "munin:[* TO *] AND role:#{node[:app_environment]}")
+munin_nodes = search(:node, "munin:[* TO *]")
+# Fetch all the snmp_nodes from the data bag item
+snmp_nodes = search( :monitoring, "hosts:[* TO *]" ).first['hosts']
 
 case node[:platform]
 when "arch"
@@ -43,8 +47,8 @@ else
   end
 end
 
-#munin_servers = search(:node, "munin:[* TO *] AND role:#{node[:app_environment]}")
-munin_servers = search(:node, "munin:[* TO *]")
+
+
 if node[:public_domain]
   case node[:app_environment]
   when "production"
@@ -59,7 +63,7 @@ end
 template "/etc/munin/munin.conf" do
   source "munin.conf.erb"
   mode 0644
-  variables(:munin_nodes => munin_servers)
+  variables(:munin_nodes => munin_nodes, :munin_snmp_nodes => snmp_nodes)
 end
 
 apache_site "000-default" do
@@ -88,6 +92,34 @@ template "#{node[:munin][:dir]}/htpasswd.users" do
   mode 0640
   variables(
     :sysadmins => web_users
+  )
+end
+
+# Grab the defaults for snmp
+snmp_defaults = data_bag_item( "snmp", "settings" )
+
+# Filled in hosts
+snmp_hosts = Hash.new
+
+# Fill in the values with defaults for the template
+snmp_nodes.each do |host,settings|
+  snmp_hosts[host] = Hash.new
+  settings.each do |k,v|
+    if v.nil? || v.empty?
+      snmp_hosts[host][k] = snmp_defaults[k]
+    else
+      snmp_hosts[host][k] = v
+    end
+  end
+end
+
+template "#{node[:munin][:dir]}/plugin-conf.d/snmp_communities" do
+  source "snmp_communities.erb"
+  owner "munin"
+  group node[:apache][:user]
+  mode 0640
+  variables(
+    :nodes => snmp_hosts
   )
 end
 

@@ -1,0 +1,6 @@
+<% @nodes.each do |host,settings| -%>
+[snmp_<%= host %>_*]
+  env.community <%= settings['community'] %>
+  env.version <%= settings['version'] %>
+
+<% end -%>
