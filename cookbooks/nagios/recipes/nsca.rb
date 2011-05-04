@@ -1,8 +1,7 @@
 #
-# Cookbook Name:: munin
-# Attributes:: default
-#
-# Copyright 2010-2011, Opscode, Inc.
+# Author:: Tyghe Vallard <tgv@montana.edu>
+# Cookbook Name:: nagios
+# Recipe:: nsca
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,13 +14,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-default['munin']['server_role'] = "munin_server"
+package "nsca"
 
-case node[:platform]
-when "arch"
-  default['munin']['docroot'] = "/srv/http/munin"
-else
-  default['munin']['docroot'] = "/var/www/munin"
+%w{ nsca send_nsca }.each do |cnf|
+  template "/etc/#{cnf}.cfg" do
+    source "#{cnf}.cfg.erb"
+    mode 0644
+  end
+end
+
+service "nsca" do
+  supports :status => true, :restart => true, :reload => true
+  action [ :enable ]
 end
