@@ -24,6 +24,8 @@ include_recipe "munin::client"
 
 package "munin"
 
+web_users = search( :users, "munin_admin:true" )
+
 case node[:platform]
 when "arch"
   cron "munin-graph-html" do
@@ -77,6 +79,16 @@ directory node['munin']['docroot'] do
   owner "munin"
   group "munin"
   mode 0755
+end
+
+template "#{node[:munin][:dir]}/htpasswd.users" do
+  source "htpasswd.users.erb"
+  owner "munin"
+  group node[:apache][:user]
+  mode 0640
+  variables(
+    :sysadmins => web_users
+  )
 end
 
 apache_site "munin.conf"

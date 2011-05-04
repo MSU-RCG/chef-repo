@@ -18,6 +18,7 @@
 #
 
 default['munin']['server_role'] = "munin_server"
+default['munin']['dir'] = "/etc/munin"
 
 case node[:platform]
 when "arch"
