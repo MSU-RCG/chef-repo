@@ -1,0 +1,35 @@
+{
+  "version": "0.0.1",
+  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
+  "providing": {
+  },
+  "platforms": {
+  },
+  "license": "All rights reserved",
+  "maintainer": "YOUR_COMPANY_NAME",
+  "replacing": {
+  },
+  "maintainer_email": "YOUR_EMAIL",
+  "groupings": {
+  },
+  "attributes": {
+  },
+  "recommendations": {
+  },
+  "description": "Installs/Configures voeis",
+  "dependencies": {
+    "rvm": [
+
+    ],
+    "postgresql": [
+
+    ]
+  },
+  "suggestions": {
+  },
+  "name": "voeis",
+  "recipes": {
+  },
+  "conflicting": {
+  }
+}
