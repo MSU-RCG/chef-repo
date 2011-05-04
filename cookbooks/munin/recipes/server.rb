@@ -95,6 +95,8 @@ template "#{node[:munin][:dir]}/htpasswd.users" do
   )
 end
 
+# ---- snmp hosts setup ----
+
 # Grab the defaults for snmp
 snmp_defaults = data_bag_item( "snmp", "settings" )
 
@@ -123,4 +125,16 @@ template "#{node[:munin][:dir]}/plugin-conf.d/snmp_communities" do
   )
 end
 
+snmp_nodes.each do |host,settings|
+  if not settings['monitor'].nil?
+    settings['monitor'].each do |service|
+      munin_plugin "snmp__#{service}" do
+        plugin "snmp_#{host}_#{service}"
+        create_file true
+      end
+    end
+  end
+end
+
+# Enable the apache site for munin
 apache_site "munin.conf"

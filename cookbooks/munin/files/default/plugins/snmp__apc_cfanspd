@@ -1,0 +1,40 @@
+#!/usr/bin/perl -w
+
+=head1 MAGIC MARKERS
+
+  #%# family=snmpauto
+  #%# capabilities=snmpconf
+
+=cut
+
+use strict;
+use Munin::Plugin::SNMP;
+
+my $oid = ".1.3.6.1.4.1.318.1.1.13.3.4.1.2.25.0";
+
+if (defined $ARGV[0] and $ARGV[0] eq "snmpconf") {
+        print "require $oid [0-9]\n"; # Number
+        exit 0;
+}
+
+if (defined $ARGV[0] and $ARGV[0] eq "config") {
+    my ($host) = Munin::Plugin::SNMP->config_session();
+        print "host_name $host\n" unless $host eq 'localhost';
+        print "graph_title Condenser Fan Speed
+graph_args --base 1000 -l 0
+graph_vlabel Fan Speed(%)
+graph_category Cooling
+graph_info This graph shows the condenser fan speed
+apc.label Fan Speed
+apc.info The condenser fan speed in percent.
+apc.draw AREA
+";
+        exit 0;
+}
+
+my $session = Munin::Plugin::SNMP->session( -translate => [ -timeticks => 0x0 ] );
+my $val = $session->get_single("$oid") || 'T';
+
+$val /= 10;
+
+print "apc.value ", $val, "\n";
